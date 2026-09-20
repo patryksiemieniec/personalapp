@@ -8,7 +8,9 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,7 @@
   "packageManager": "pnpm@12.4.2",
   "type": "module",
   "devDependencies": {
-    "turbo": "^2.10.13"
+    "turbo": "^2.10.13",
+    "prettier": "^3.4.2"
   }
 }
