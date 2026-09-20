@@ -1,12 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service.js';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { DATABASE_POOL } from './database/database.constant.js';
+import { Pool } from 'pg';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    @Inject(DATABASE_POOL)
+    private readonly db: Pool,
+  ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('health')
+  async health() {
+    const result = await this.db.query('SELECT NOW() AS now');
+
+    return {
+      status: 'ok',
+      database: 'ok',
+      time: result.rows[0].now,
+    };
   }
 }

@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: personal-ops-postgres
+
+    environment:
+      POSTGRES_USER: personalops
+      POSTGRES_PASSWORD: personalops
+      POSTGRES_DB: personalops
+
+    ports:
+      - '5432:5432'
+
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+volumes:
+  postgres-data:
