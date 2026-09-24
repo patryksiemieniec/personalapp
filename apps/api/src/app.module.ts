@@ -6,6 +6,7 @@ import { HealthModule } from './health/health.module.js';
 import { LoggingModule } from './logging/logging.module.js';
 import { APP_FILTER } from '@nestjs/core';
 import { ProblemDetailsFilter } from './common/http/problem-details.filter.js';
+import { TasksModule } from './modules/tasks/task.module.js';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ProblemDetailsFilter } from './common/http/problem-details.filter.js';
     DatabaseModule,
     HealthModule,
     LoggingModule,
+    TasksModule,
   ],
   providers: [
     {
