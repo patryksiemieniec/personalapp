@@ -24,6 +24,7 @@ import { ListTasksQuery } from './application/queries/list-tasks.query.js';
   controllers: [TasksController],
   providers: [
     PgTaskRepository,
+    PgTaskReadRepository,
     SystemClock,
     UuidGenerator,
 
