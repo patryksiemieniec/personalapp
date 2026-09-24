@@ -1,7 +1,17 @@
-import type { Task } from '../../../domain/task.js';
+interface TaskHttpModel {
+  id: string;
+  title: string;
+  description: string | null;
+  status: string;
+  priority: string;
+  dueAt: Date | null;
+  completedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export class TaskPresenter {
-  static toHttp(task: Task) {
+  static toHttp(task: TaskHttpModel) {
     return {
       id: task.id,
       title: task.title,

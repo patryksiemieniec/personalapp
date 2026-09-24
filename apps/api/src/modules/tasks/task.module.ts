@@ -4,7 +4,7 @@ import { CLOCK } from './application/ports/clock.js';
 
 import { ID_GENERATOR } from './application/ports/id-generator.js';
 
-import { PgTaskRepository } from './infrastructure/persistence/postgres/pg-task.repository.js';
+import { PgTaskRepository } from './infrastructure/persistence/postgres/repositories/pg-task.repository.js';
 import { SystemClock } from './infrastructure/time/system-clock.js';
 import { UuidGenerator } from './infrastructure/id/uuid-generator.js';
 
@@ -15,6 +15,10 @@ import { CancelTaskUseCase } from './application/use-cases/cancel-task.use-case.
 import { ReopenTaskUseCase } from './application/use-cases/reopen-task.use-case.js';
 import { TASK_REPOSITORY } from './domain/task.repository.js';
 import { TasksController } from './presentation/task.controller.js';
+import { TASK_READ_REPOSITORY } from './application/queries/task-read.repository.js';
+import { PgTaskReadRepository } from './infrastructure/persistence/postgres/repositories/pg-task-read.repository.js';
+import { GetTaskQuery } from './application/queries/get-task.query.js';
+import { ListTasksQuery } from './application/queries/list-tasks.query.js';
 
 @Module({
   controllers: [TasksController],
@@ -35,12 +39,17 @@ import { TasksController } from './presentation/task.controller.js';
       provide: ID_GENERATOR,
       useExisting: UuidGenerator,
     },
-
+    {
+      provide: TASK_READ_REPOSITORY,
+      useExisting: PgTaskReadRepository,
+    },
     CreateTaskUseCase,
     StartTaskUseCase,
     CompleteTaskUseCase,
     CancelTaskUseCase,
     ReopenTaskUseCase,
+    GetTaskQuery,
+    ListTasksQuery,
   ],
 })
 export class TasksModule {}

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseService } from '../../../../../database/database.service.js';
-import type { Task } from '../../../domain/task.js';
-import { TaskMapper } from './task.mapper.js';
-import type { TaskRow } from './task-row.js';
-import { TaskRepository } from '../../../domain/task.repository.js';
+import { DatabaseService } from '../../../../../../database/database.service.js';
+import type { Task } from '../../../../domain/task.js';
+import { TaskMapper } from '../task.mapper.js';
+import type { TaskRow } from '../task-row.js';
+import { TaskRepository } from '../../../../domain/task.repository.js';
 
 @Injectable()
 export class PgTaskRepository implements TaskRepository {
