@@ -1,8 +1,8 @@
-import { CLOCK, type Clock } from '../ports/clock.js';
-import { TaskNotFoundError } from '../errors/task-not-found.error.js';
-import { TASK_REPOSITORY, type TaskRepository } from '../../domain/task.repository.js';
+import { CLOCK, type Clock } from '../../ports/clock.js';
+import { TaskNotFoundError } from '../../errors/task-not-found.error.js';
+import { TASK_REPOSITORY, type TaskRepository } from '../../../domain/task.repository.js';
 import { Inject, Injectable } from '@nestjs/common';
-import { mapTaskDomainError } from '../errors/map-task-domain-error.js';
+import { mapTaskDomainError } from '../../errors/map-task-domain-error.js';
 
 @Injectable()
 export class CompleteTaskUseCase {

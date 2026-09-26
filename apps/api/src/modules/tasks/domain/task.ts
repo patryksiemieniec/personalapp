@@ -123,4 +123,24 @@ export class Task {
     this.props.status = TaskStatus.InProgress;
     this.props.updatedAt = now;
   }
+
+  rename(title: string, now: Date): void {
+    this.props.title = title;
+    this.props.updatedAt = now;
+  }
+
+  changeDescription(description: string | null, now: Date): void {
+    this.props.description = description;
+    this.props.updatedAt = now;
+  }
+
+  changePriority(priority: TaskPriority, now: Date): void {
+    this.props.priority = priority;
+    this.props.updatedAt = now;
+  }
+
+  reschedule(dueAt: Date | null, now: Date): void {
+    this.props.dueAt = dueAt;
+    this.props.updatedAt = now;
+  }
 }

@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
-import { FixedClock } from '../../../../../test/support/fixed-clock.js';
-import { FixedIdGenerator } from '../../../../../test/support/fixed-id-generator.js';
-import { InMemoryTaskRepository } from '../../../../../test/support/in-memory-task.repository.js';
+import { FixedClock } from '../../../../../../test/support/fixed-clock.js';
+import { FixedIdGenerator } from '../../../../../../test/support/fixed-id-generator.js';
+import { InMemoryTaskRepository } from '../../../../../../test/support/in-memory-task.repository.js';
 
-import { TaskPriority } from '../../domain/task-priority.js';
-import { TaskStatus } from '../../domain/task-status.js';
+import { TaskPriority } from '../../../domain/task-priority.js';
+import { TaskStatus } from '../../../domain/task-status.js';
 import { CreateTaskUseCase } from './create-task.use-case.js';
 
 describe('CreateTaskUseCase', () => {

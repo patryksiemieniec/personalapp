@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TASK_REPOSITORY, type TaskRepository } from '../../domain/task.repository.js';
-import { TaskNotFoundError } from '../errors/task-not-found.error.js';
-import { CLOCK, type Clock } from '../ports/clock.js';
-import { mapTaskDomainError } from '../errors/map-task-domain-error.js';
+import { TASK_REPOSITORY, type TaskRepository } from '../../../domain/task.repository.js';
+import { TaskNotFoundError } from '../../errors/task-not-found.error.js';
+import { CLOCK, type Clock } from '../../ports/clock.js';
+import { mapTaskDomainError } from '../../errors/map-task-domain-error.js';
 
 @Injectable()
-export class StartTaskUseCase {
+export class CancelTaskUseCase {
   constructor(
     @Inject(TASK_REPOSITORY)
     private readonly taskRepository: TaskRepository,
@@ -20,9 +20,8 @@ export class StartTaskUseCase {
     if (!task) {
       throw new TaskNotFoundError(taskId);
     }
-
     try {
-      task.start(this.clock.now());
+      task.cancel(this.clock.now());
     } catch (error) {
       mapTaskDomainError(error);
     }

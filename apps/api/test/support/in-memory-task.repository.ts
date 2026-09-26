@@ -1,4 +1,4 @@
-import { TaskRepository } from '../../src/modules/tasks/domain/task.repository.js';
+import { type TaskRepository } from '../../src/modules/tasks/domain/task.repository.js';
 import type { Task } from '../../src/modules/tasks/domain/task.js';
 
 export class InMemoryTaskRepository implements TaskRepository {

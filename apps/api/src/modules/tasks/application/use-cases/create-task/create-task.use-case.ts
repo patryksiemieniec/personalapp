@@ -1,20 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-
-import { TASK_REPOSITORY, type TaskRepository } from '../../domain/task.repository.js';
-
-import { CLOCK, type Clock } from '../ports/clock.js';
-
-import { ID_GENERATOR, type IdGenerator } from '../ports/id-generator.js';
-
-import { Task } from '../../domain/task.js';
-import { TaskPriority } from '../../domain/task-priority.js';
-
-export interface CreateTaskCommand {
-  title: string;
-  description?: string | null;
-  priority?: TaskPriority;
-  dueAt?: Date | null;
-}
+import { TASK_REPOSITORY, type TaskRepository } from '../../../domain/task.repository.js';
+import { CLOCK, type Clock } from '../../ports/clock.js';
+import { ID_GENERATOR, type IdGenerator } from '../../ports/id-generator.js';
+import { Task } from '../../../domain/task.js';
+import type { CreateTaskCommand } from './create-task.command.js';
 
 @Injectable()
 export class CreateTaskUseCase {

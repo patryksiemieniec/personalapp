@@ -1,24 +1,29 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
 import { CreateTaskDto } from './http/dto/create-task.dto.js';
-import { CreateTaskUseCase } from '../application/use-cases/create-task.use-case.js';
+import { CreateTaskUseCase } from '../application/use-cases/create-task/create-task.use-case.js';
 import { TaskPresenter } from './http/presenter/task.presenter.js';
 import { GetTaskQuery } from '../application/queries/get-task.query.js';
 import { ListTasksQuery } from '../application/queries/list-tasks.query.js';
 import { ListTasksQueryDto } from './http/dto/list-tasks-query.dto.js';
-import type { StartTaskUseCase } from '../application/use-cases/start-task.use-case.js';
-import type { CompleteTaskUseCase } from '../application/use-cases/complete-task.use-case.js';
-import type { CancelTaskUseCase } from '../application/use-cases/cancel-task.use-case.js';
-import type { ReopenTaskUseCase } from '../application/use-cases/reopen-task.use-case.js';
+import { StartTaskUseCase } from '../application/use-cases/start-task/start-task.use-case.js';
+import { CompleteTaskUseCase } from '../application/use-cases/complete-task/complete-task.use-case.js';
+import { CancelTaskUseCase } from '../application/use-cases/cancel-task/cancel-task.use-case.js';
+import { ReopenTaskUseCase } from '../application/use-cases/reopen-task/reopen-task.use-case.js';
+import { UpdateTaskDto } from './http/dto/update-task.dto.js';
+import { UpdateTaskUseCase } from '../application/use-cases/update-task/update-task.use-case.js';
+import { DeleteTaskUseCase } from '../application/use-cases/delete-task/delete-task.use-case.js';
 @Controller({
   path: 'tasks',
   version: '1',
@@ -32,6 +37,8 @@ export class TasksController {
     private readonly completeTask: CompleteTaskUseCase,
     private readonly cancelTask: CancelTaskUseCase,
     private readonly reopenTask: ReopenTaskUseCase,
+    private readonly updateTask: UpdateTaskUseCase,
+    private readonly deleteTask: DeleteTaskUseCase,
   ) {}
 
   @Post()
@@ -79,6 +86,33 @@ export class TasksController {
     const task = await this.getTask.execute(id);
 
     return TaskPresenter.toHttp(task);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+
+    @Body()
+    dto: UpdateTaskDto,
+  ) {
+    const task = await this.updateTask.execute(id, {
+      title: dto.title,
+      description: dto.description,
+      priority: dto.priority,
+      dueAt: dto.dueAt === undefined ? undefined : dto.dueAt === null ? null : new Date(dto.dueAt),
+    });
+
+    return TaskPresenter.toHttp(task);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+  ): Promise<void> {
+    await this.deleteTask.execute(id);
   }
 
   @Post(':id/start')
