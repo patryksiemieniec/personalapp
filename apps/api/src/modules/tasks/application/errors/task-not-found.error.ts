@@ -1,7 +1,7 @@
-export class TaskNotFoundError extends Error {
-  constructor(public readonly taskId: string) {
-    super(`Task "${taskId}" was not found`);
+import { ApplicationError } from '../../../../common/errors/application.error.js';
 
-    this.name = TaskNotFoundError.name;
+export class TaskNotFoundError extends ApplicationError {
+  constructor(taskId: string) {
+    super('TASK_NOT_FOUND', `Task "${taskId}" was not found`, 'not_found');
   }
 }

@@ -2,6 +2,7 @@ import { CLOCK, type Clock } from '../ports/clock.js';
 import { TaskNotFoundError } from '../errors/task-not-found.error.js';
 import { TASK_REPOSITORY, type TaskRepository } from '../../domain/task.repository.js';
 import { Inject, Injectable } from '@nestjs/common';
+import { mapTaskDomainError } from '../errors/map-task-domain-error.js';
 
 @Injectable()
 export class CompleteTaskUseCase {
@@ -20,7 +21,11 @@ export class CompleteTaskUseCase {
       throw new TaskNotFoundError(taskId);
     }
 
-    task.complete(this.clock.now());
+    try {
+      task.complete(this.clock.now());
+    } catch (error) {
+      mapTaskDomainError(error);
+    }
 
     await this.taskRepository.save(task);
   }

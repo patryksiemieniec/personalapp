@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { TASK_READ_REPOSITORY, type TaskReadRepository } from './task-read.repository.js';
+import type { ListTasksParams } from './models/list-tasks.types.js';
 
 @Injectable()
 export class ListTasksQuery {
@@ -9,7 +10,7 @@ export class ListTasksQuery {
     private readonly repository: TaskReadRepository,
   ) {}
 
-  execute() {
-    return this.repository.findMany();
+  execute(params: ListTasksParams) {
+    return this.repository.findMany(params);
   }
 }

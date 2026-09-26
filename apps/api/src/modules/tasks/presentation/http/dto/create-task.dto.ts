@@ -1,5 +1,4 @@
 import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-
 import { TaskPriority } from '../../../domain/task-priority.js';
 
 export class CreateTaskDto {
