@@ -6,6 +6,11 @@ import { mapValidationErrors } from './common/http/validation-errors.mapper.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id'],
+  });
   app.enableShutdownHooks();
   app.setGlobalPrefix('api');
   app.enableVersioning({
