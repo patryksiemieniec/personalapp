@@ -1,11 +1,29 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001/api/v1';
+import { env } from '../config/env';
+
+export interface ProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+  code: string;
+  requestId: string;
+
+  errors?: Array<{
+    field: string;
+    messages: string[];
+  }>;
+}
+
+const API_URL = env.NEXT_PUBLIC_API_URL;
 
 export class HttpError extends Error {
   constructor(
     public readonly status: number,
-    public readonly body: unknown,
+    public readonly problem: ProblemDetails | null,
   ) {
-    super(`HTTP request failed with status ${status}`);
+    super(problem?.detail ?? `HTTP request failed with status ${status}`);
+
     this.name = HttpError.name;
   }
 }
@@ -23,9 +41,9 @@ export async function httpClient<T>(path: string, init?: RequestInit): Promise<T
   });
 
   if (!response.ok) {
-    const body = await response.json().catch(() => null);
+    const problem = await response.json().catch(() => null);
 
-    throw new HttpError(response.status, body);
+    throw new HttpError(response.status, problem);
   }
 
   if (response.status === 204) {

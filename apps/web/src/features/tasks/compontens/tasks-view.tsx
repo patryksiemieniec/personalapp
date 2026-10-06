@@ -79,7 +79,7 @@ export function TasksView() {
   }, [debouncedSearch, searchParams, updateParams]);
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6">
+    <div className="mx-auto w-full max-w-6xl">
       <header className="mb-8">
         <p className="mb-1 text-sm font-medium text-zinc-500">Personal Ops</p>
 
@@ -174,6 +174,6 @@ export function TasksView() {
           </>
         )}
       </section>
-    </main>
+    </div>
   );
 }

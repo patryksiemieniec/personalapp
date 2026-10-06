@@ -1,5 +1,3 @@
-BEGIN;
-
 CREATE TABLE tasks (
     id UUID PRIMARY KEY,
 
@@ -58,5 +56,3 @@ CREATE INDEX idx_tasks_due_at
 
 CREATE INDEX idx_tasks_priority
     ON tasks (priority);
-
-COMMIT;
