@@ -142,3 +142,9 @@ function requireEnv(name: string): string {
 
   return value;
 }
+
+main().catch((error: unknown) => {
+  console.error('Database migration failed', error);
+
+  process.exitCode = 1;
+});

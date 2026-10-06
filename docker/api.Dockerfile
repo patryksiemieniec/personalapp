@@ -59,6 +59,10 @@ COPY --from=builder \
     ./apps/api/dist
 
 COPY --from=builder \
+    /app/apps/api/src/database/migrations \
+    ./apps/api/dist/database/migrations
+
+COPY --from=builder \
     /app/apps/api/package.json \
     ./apps/api/package.json
 

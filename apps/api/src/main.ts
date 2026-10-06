@@ -3,6 +3,7 @@ import { AppModule } from './app.module.js';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { RequestValidationException } from './common/http/request-validation.exception.js';
 import { mapValidationErrors } from './common/http/validation-errors.mapper.js';
+import { setupOpenApi } from './openapi/openapi.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,6 +31,7 @@ async function bootstrap() {
       },
     }),
   );
+  setupOpenApi(app);
   await app.listen(process.env.PORT ?? 3001);
 }
 await bootstrap();

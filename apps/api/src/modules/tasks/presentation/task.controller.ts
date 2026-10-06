@@ -24,6 +24,10 @@ import { ReopenTaskUseCase } from '../application/use-cases/reopen-task/reopen-t
 import { UpdateTaskDto } from './http/dto/update-task.dto.js';
 import { UpdateTaskUseCase } from '../application/use-cases/update-task/update-task.use-case.js';
 import { DeleteTaskUseCase } from '../application/use-cases/delete-task/delete-task.use-case.js';
+import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { PaginatedTasksResponse, TaskResponse } from './http/model/task-response.js';
+
+@ApiTags('tasks')
 @Controller({
   path: 'tasks',
   version: '1',
@@ -41,8 +45,10 @@ export class TasksController {
     private readonly deleteTask: DeleteTaskUseCase,
   ) {}
 
+  @ApiCreatedResponse({
+    type: TaskResponse,
+  })
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreateTaskDto) {
     const task = await this.createTask.execute({
       title: dto.title,
@@ -54,6 +60,9 @@ export class TasksController {
     return TaskPresenter.toHttp(task);
   }
 
+  @ApiOkResponse({
+    type: PaginatedTasksResponse,
+  })
   @Get()
   async findAll(@Query() query: ListTasksQueryDto) {
     const result = await this.listTasks.execute({
@@ -78,6 +87,9 @@ export class TasksController {
     };
   }
 
+  @ApiOkResponse({
+    type: TaskResponse,
+  })
   @Get(':id')
   async findById(
     @Param('id', new ParseUUIDPipe())
@@ -88,6 +100,9 @@ export class TasksController {
     return TaskPresenter.toHttp(task);
   }
 
+  @ApiOkResponse({
+    type: TaskResponse,
+  })
   @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe())
@@ -106,6 +121,7 @@ export class TasksController {
     return TaskPresenter.toHttp(task);
   }
 
+  @ApiNoContentResponse()
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(
@@ -115,24 +131,28 @@ export class TasksController {
     await this.deleteTask.execute(id);
   }
 
+  @ApiNoContentResponse()
   @Post(':id/start')
   @HttpCode(HttpStatus.NO_CONTENT)
   async start(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
     await this.startTask.execute(id);
   }
 
+  @ApiNoContentResponse()
   @Post(':id/complete')
   @HttpCode(HttpStatus.NO_CONTENT)
   async complete(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
     await this.completeTask.execute(id);
   }
 
+  @ApiNoContentResponse()
   @Post(':id/cancel')
   @HttpCode(HttpStatus.NO_CONTENT)
   async cancel(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
     await this.cancelTask.execute(id);
   }
 
+  @ApiNoContentResponse()
   @Post(':id/reopen')
   @HttpCode(HttpStatus.NO_CONTENT)
   async reopen(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
